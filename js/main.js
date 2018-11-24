@@ -1,48 +1,82 @@
 //Data
 var data = JSON.parse(localStorage.getItem('Data'));
-console.log(data[0].Country);
-// Define margins
-var margin = {top: 25, right: 60, bottom: 50, left: 50};
-var paddingH=50,paddingV=50;
-// Define Width and height
-var outer_width = 1000;
-var outer_height = 1000;
-var svg_width = outer_width - margin.left - margin.right;
-var svg_height = outer_height - margin.top - margin.bottom;
-var xScale, yScale, radiusScale;
-//Create SVG element as a group with the margins transform applied to it
-var svg = d3.select("#bubble_chart")
-    .append("svg")
-    .attr("id", "bubble")
-    .attr("width", svg_width)
-    .style("background-color", "aliceblue")
-    .attr("height", svg_height)
-    drawGraph();
- function drawGraph(){
-    setScales();
-    var bubbles = svg.select('#bubble_chart')
-                        .data(data)
-                        .enter()
-                        .append('circle');
-    bubbles.attr("cx",function(d){xScale(d.gdp);})
-    .attr("cy",function(d){yScale(d.CompIndex);})
-    .attr("r",function(d){radiusScale(d.Population);})
-    .style("fill","blue");
-    drawAxes();
-}
-function setScales(){
-    //xScale=d3.scaleLinear().domain([0, + console.log(d3.max(data, function(d){return (d.gdp)}))]).range([paddingH, svg_width - paddingH]);
-    //yScale=d3.scaleLinear().domain([0, + d3.max(data,function(d){return d.CompIndex})]).range([svg_height - (paddingV*2),paddingV]);
-    //radiusScale=d3.scaleLinear().domain([0,d3.max(data,function(d){return(d.population)})]).range([5,15]);
-    xScale=d3.scaleLinear().domain([0, 1940000]).range([paddingH, svg_width - paddingH]);
-    yScale=d3.scaleLinear().domain([0,6]).range([svg_height - (paddingV*2),paddingV]);
-    radiusScale=d3.scaleLinear().domain([0,d3.max(data,function(d){return 30})]).range([5,15]);
-}
-function drawAxes(){
-    svg.append("g")
-    .attr("transform","translate("+0+","+(svg_height-paddingV*2)+")")
-    .call(d3.axisBottom(xScale).ticks(20));
-    svg.append("g")
-    .attr("transform","translate("+paddingV+","+0+")")
-    .call(d3.axisLeft(yScale).ticks(20));
-}
+console.log(data[0].region);
+var margin = {top: 30, right: 50, bottom: 40, left:40};
+	var width = 1500 - margin.left - margin.right;
+	var height = 700 - margin.top - margin.bottom;
+	var svg = d3.select('body')
+		.append('svg')
+		.attr('width', width + margin.left + margin.right)
+		.attr('height', height + margin.top + margin.bottom)
+	.append('g')
+		.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+	var xScale = d3.scaleLinear()
+		.range([0, width]);
+	var yScale = d3.scaleLinear()
+		.range([height, 0]);
+	// square root scale.
+	var radius = d3.scaleSqrt()
+		.range([2,5]);
+	var xAxis = d3.axisBottom()
+		.scale(xScale);
+	var yAxis = d3.axisLeft()
+		.scale(yScale);
+	var color = d3.scaleOrdinal(d3.schemeCategory10);
+	xScale.domain(d3.extent(data, function(d){
+		return (d.gdp/500);
+	})).nice();
+
+	yScale.domain(d3.extent(data, function(d){
+		return d.CompIndex;
+    })).nice();
+	radius.domain(d3.extent(data, function(d){
+		return (d.population/10);
+	})).nice();
+	svg.append('g')
+		.attr('transform', 'translate(0,' + height + ')')
+		.attr('class', 'x axis')
+		.call(xAxis);
+	svg.append('g')
+		.attr('transform', 'translate(0,0)')
+		.attr('class', 'y axis')
+		.call(yAxis);
+	var bubble = svg.selectAll('#bubble_chart')
+		.data(data)
+		.enter().append('circle')
+		.attr('id', 'bubble_chart')
+		.attr('cx', function(d){return xScale(d.gdp);})
+		.attr('cy', function(d){ return yScale(d.CompIndex); })
+			.attr('r', function(d){ return radius(d.population); })
+			.style('fill', function(d){ return color(d.region); });
+		bubble.append('title')
+			.attr('x', function(d){ return radius(d.population); })
+			.text(function(d){
+				return d.Country;
+			});
+		svg.append('text')
+			.attr('x', 10)
+			.attr('y', 10)
+			.attr('class', 'label')
+			.text('Global Competitive Index');
+		svg.append('text')
+			.attr('x', width)
+			.attr('y', height - 10)
+			.attr('text-anchor', 'end')
+			.attr('class', 'label')
+            .text('GDP');
+		var legend = svg.selectAll('legend')
+			.data(color.domain())
+			.enter().append('g')
+			.attr('class', 'legend')
+            .attr('transform', function(d,i){ return 'translate(0,' + i * 20 + ')'; });   
+		legend.append('rect')
+			.attr('x', width)
+			.attr('width', 18)
+			.attr('height', 18)
+			.style('fill', color);
+		legend.append('text')
+			.attr('x', width - 6)
+			.attr('y', 9)
+			.attr('dy', '.35em')
+			.style('text-anchor', 'end')
+			.text(function(d){ return d; });
