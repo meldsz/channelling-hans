@@ -11,7 +11,8 @@ function generateVisualisation() {
     xScale.domain([xMin, xMax / 200]).nice();
     yScale.domain([yMin, yMax]).nice();
 
-    radius.domain(d3.extent(filteredDataset, data => data.population)).nice();
+    radius.domain([0,1e7]).nice();
+    // radius.domain(d3.extent(filteredDataset, data => data.population)).nice();
 
     svg.select("#x-axis").call(xAxis);
     svg.select("#y-axis").call(yAxis);
@@ -43,8 +44,7 @@ function generateVisualisation() {
             return d.Country;
         });
 
-    bubble.exit().remove();
-    console.log(bubble.exit().remove())
+    bubble.exit();
 
     d3.select("#yearText").text(displayYear)
 }
