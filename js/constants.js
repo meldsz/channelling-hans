@@ -8,6 +8,11 @@ function initialSvgSetup() {
     maxYear = d3.max(dataset.map(data => +data.year));
     displayYear = minYear;
 
+    xMin = d3.min(dataset.map(data => +data.gdp));
+    xMax = d3.max(dataset.map(data => +data.gdp));
+    yMin = d3.min(dataset.map(data => +data.CompIndex));
+    yMax = d3.max(dataset.map(data => +data.CompIndex));
+
     svg = d3.select('body')
         .append('svg')
         .attr('width', width + margin.left + margin.right)

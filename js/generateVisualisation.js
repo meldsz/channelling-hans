@@ -5,22 +5,11 @@ function generateVisualisation() {
             return data.year;
         }
     });
+console.log(filteredDataset)
 
-    xMin = d3.min(dataset.map(data => +data.gdp));
-    xMax = d3.max(dataset.map(data => +data.gdp));
-    yMin = d3.min(dataset.map(data => +data.CompIndex));
-    yMax = d3.max(dataset.map(data => +data.CompIndex));
-
-
-    // color = d3.scaleOrdinal(d3.schemeCategory10);
-    // xScale.domain(d3.extent(filteredDataset, function (d) {
-    //     return (d.gdp / 50);
-    // })).nice();
     color = d3.scaleOrdinal(d3.schemeCategory10);
     xScale.domain([xMin, xMax / 200]).nice();
-    // yScale.domain(d3.extent(filteredDataset, function (d) {
-    //     return d.CompIndex;
-    // })).nice();
+
     yScale.domain([yMin, yMax]).nice();
 
     radius.domain(d3.extent(filteredDataset, function (d) {
@@ -48,6 +37,7 @@ function generateVisualisation() {
         })
         .style("stroke", "black")
         .style("stroke-opacity", .4);
+
     bubble.append('title')
         .attr('x', function (d) {
             return radius(d.population);
@@ -55,4 +45,8 @@ function generateVisualisation() {
         .text(function (d) {
             return d.Country;
         });
+
+    bubble.exit().remove();
+
+    d3.select("#yearText").text(displayYear)
 }
