@@ -7,7 +7,7 @@ var csvdata = d3.csv("./data/GCI_CompleteData2.csv")
             var ci= d[i].Global_Competitiveness_Index
             var p = d[i].Population
             var gdp = d[i].GDP
-            var region = d[i].Forum_classification
+            var region = d[i]["Forum classification"]
                 var obj = {
                     "Country": c,
                     "year": y,
