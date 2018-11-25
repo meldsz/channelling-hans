@@ -6,7 +6,7 @@ function generateVisualisation() {
         }
     });
 
-    var color = d3.scaleOrdinal(d3.schemeCategory10);
+    color = d3.scaleOrdinal(d3.schemeCategory10);
     xScale.domain(d3.extent(filteredDataset, function (d) {
         return (d.gdp / 50);
     })).nice();
