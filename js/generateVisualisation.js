@@ -6,17 +6,25 @@ function generateVisualisation() {
         }
     });
 
-    color = d3.scaleOrdinal(d3.schemeCategory10);
-    xScale.domain(d3.extent(filteredDataset, function (d) {
-        return (d.gdp / 50);
-    })).nice();
+    xMin = d3.min(dataset.map(data => +data.gdp));
+    xMax = d3.max(dataset.map(data => +data.gdp));
+    yMin = d3.min(dataset.map(data => +data.CompIndex));
+    yMax = d3.max(dataset.map(data => +data.CompIndex));
 
-    yScale.domain(d3.extent(filteredDataset, function (d) {
-        return d.CompIndex;
-    })).nice();
+
+    // color = d3.scaleOrdinal(d3.schemeCategory10);
+    // xScale.domain(d3.extent(filteredDataset, function (d) {
+    //     return (d.gdp / 50);
+    // })).nice();
+    color = d3.scaleOrdinal(d3.schemeCategory10);
+    xScale.domain([xMin, xMax / 200]).nice();
+    // yScale.domain(d3.extent(filteredDataset, function (d) {
+    //     return d.CompIndex;
+    // })).nice();
+    yScale.domain([yMin, yMax]).nice();
 
     radius.domain(d3.extent(filteredDataset, function (d) {
-        return (d.population / 10);
+        return (d.population);
     })).nice();
 
     svg.select("#x-axis").call(xAxis);
@@ -37,7 +45,9 @@ function generateVisualisation() {
         })
         .style('fill', function (d) {
             return color(d.region);
-        });
+        })
+        .style("stroke", "black")
+        .style("stroke-opacity", .4);
     bubble.append('title')
         .attr('x', function (d) {
             return radius(d.population);
