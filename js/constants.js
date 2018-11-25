@@ -8,6 +8,7 @@ function initialSvgSetup() {
     maxYear = d3.max(dataset.map(data => +data.year));
     displayYear = minYear;
 
+    // calculate minimum and maximum values for GDP and CompIndex for the axes
     xMin = d3.min(dataset.map(data => +data.gdp));
     xMax = d3.max(dataset.map(data => +data.gdp));
     yMin = d3.min(dataset.map(data => +data.CompIndex));
@@ -28,11 +29,11 @@ function initialSvgSetup() {
         .scale(xScale);
     yAxis = d3.axisLeft()
         .scale(yScale);
-// square root scale.
+    // square root scale.
     radius = d3.scaleSqrt()
         .range([2, 5]);
 
-// Add Axes Titles
+    // Add Axes Titles
     svg.append("text")
         .attr("x", -40)
         .attr("y", 450)

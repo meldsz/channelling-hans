@@ -1,28 +1,25 @@
 function generateVisualisation() {
     // filter all the data for display year
-    filteredDataset = dataset.filter(data => {
+    const filteredDataset = dataset.filter(data => {
         if (data.year == displayYear) {
             return data.year;
         }
     });
-console.log(filteredDataset)
-
+    console.log(filteredDataset)
     color = d3.scaleOrdinal(d3.schemeCategory10);
-    xScale.domain([xMin, xMax / 200]).nice();
 
+    xScale.domain([xMin, xMax / 200]).nice();
     yScale.domain([yMin, yMax]).nice();
 
-    radius.domain(d3.extent(filteredDataset, function (d) {
-        return (d.population);
-    })).nice();
+    radius.domain(d3.extent(filteredDataset, data => data.population)).nice();
 
     svg.select("#x-axis").call(xAxis);
     svg.select("#y-axis").call(yAxis);
 
-    var bubble = svg.selectAll('#bubble_chart')
+    var bubble = svg.selectAll('#bubbles')
         .data(filteredDataset)
         .enter().append('circle')
-        .attr('id', 'bubble_chart')
+        .attr('id', 'bubble')
         .attr('cx', function (d) {
             return xScale(d.gdp);
         })
@@ -47,6 +44,7 @@ console.log(filteredDataset)
         });
 
     bubble.exit().remove();
+    console.log(bubble.exit().remove())
 
     d3.select("#yearText").text(displayYear)
 }
