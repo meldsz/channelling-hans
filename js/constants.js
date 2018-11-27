@@ -1,6 +1,6 @@
 function initialSvgSetup() {
-    // Define Margins
-    var margin = {top: 30, right: 50, bottom: 100, left: 100};
+    // Define Margins, height and width for the svg canvas
+    let margin = {top: 30, right: 50, bottom: 100, left: 100};
     width = 1000 - margin.left - margin.right;
     height = 700 - margin.top - margin.bottom;
 
@@ -21,16 +21,22 @@ function initialSvgSetup() {
         .append('g')
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
+    // define scales and axes
     xScale = d3.scaleLinear()
+        .domain([xMin, xMax / 100]).nice()
+        // .domain([0].concat([1000, 5000, 10000, 20000, 50000]).concat([xMax])).nice()
         .range([0, width]);
     yScale = d3.scaleLinear()
+        .domain([yMin, yMax]).nice()
         .range([height, 0]);
     xAxis = d3.axisBottom()
-        .scale(xScale);
+        .scale(xScale).ticks(5);
     yAxis = d3.axisLeft()
         .scale(yScale);
     // square root scale.
     radius = d3.scaleSqrt()
+        .domain([0, 1e7]).nice()
+        // .domain(d3.extent(filteredDataset, data => data.population)).nice();
         .range([2, 5]);
 
     // Add Axes Titles

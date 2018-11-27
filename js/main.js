@@ -14,13 +14,13 @@ var legend = svg.selectAll('legend')
     });
 
 legend.append('rect')
-    .attr('x', width+20)
+    .attr('x', width + 20)
     .attr('width', 18)
     .attr('height', 18)
     .style('fill', color);
 
 legend.append('text')
-    .attr('x', width+20 - 6)
+    .attr('x', width + 20 - 6)
     .attr('y', 9)
     .attr('dy', '.35em')
     .style('text-anchor', 'end')
