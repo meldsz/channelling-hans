@@ -8,26 +8,24 @@ function initialSvgSetup() {
     maxYear = d3.max(dataset.map(data => +data.year));
     displayYear = minYear;
 
-    // calculate minimum and maximum values for GDP and CompIndex for the axes
+    // calculate minimum and maximum values for GDP for the axes
     xMin = d3.min(dataset.map(data => +data.gdp));
     xMax = d3.max(dataset.map(data => +data.gdp));
-    yMin = d3.min(dataset.map(data => +data.CompIndex));
-    yMax = d3.max(dataset.map(data => +data.CompIndex));
 
     svg = d3.select('body')
         .append('svg')
         .attr('width', width + margin.left + margin.right)
         .attr('height', height + margin.top + margin.bottom)
         .append('g')
+        .attr('class', 'svg_chart')
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
     // define scales and axes
     xScale = d3.scaleLinear()
-        .domain([xMin, xMax / 100]).nice()
-        // .domain([0].concat([1000, 5000, 10000, 20000, 50000]).concat([xMax])).nice()
+        .domain([0, xMax / 5]).nice()
         .range([0, width]);
     yScale = d3.scaleLinear()
-        .domain([yMin, yMax]).nice()
+        .domain(d3.extent(dataset, data => data.CompIndex)).nice()
         .range([height, 0]);
     xAxis = d3.axisBottom()
         .scale(xScale).ticks(5);
@@ -75,4 +73,7 @@ function initialSvgSetup() {
     svg.append('g')
         .attr('transform', 'translate(0,0)')
         .attr('id', 'y-axis');
+
+    // create a group to include all the bubbles
+    d3.select('.svg_chart').append('g').attr('class', 'bubble_group');
 }
