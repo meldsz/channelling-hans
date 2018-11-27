@@ -3,10 +3,6 @@ function generateVisualisation() {
     // filter all the data to only include data for display year
     const filteredDataset = dataset.filter(data => data.year == displayYear);
 
-    // call axes
-    svg.select("#x-axis").call(xAxis);
-    svg.select("#y-axis").call(yAxis);
-
     color = d3.scaleOrdinal(d3.schemeCategory10);
 
     const bubble = svg.select(".bubble_group")

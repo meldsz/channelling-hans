@@ -12,14 +12,6 @@ function initialSvgSetup() {
     xMin = d3.min(dataset.map(data => +data.gdp));
     xMax = d3.max(dataset.map(data => +data.gdp));
 
-    svg = d3.select('body')
-        .append('svg')
-        .attr('width', width + margin.left + margin.right)
-        .attr('height', height + margin.top + margin.bottom)
-        .append('g')
-        .attr('class', 'svg_chart')
-        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-
     // define scales and axes
     xScale = d3.scaleLinear()
         .domain([0, xMax / 5]).nice()
@@ -31,13 +23,21 @@ function initialSvgSetup() {
         .scale(xScale).ticks(5);
     yAxis = d3.axisLeft()
         .scale(yScale);
+
     // square root scale.
     radius = d3.scaleSqrt()
         .domain([0, 1e7]).nice()
-        // .domain(d3.extent(filteredDataset, data => data.population)).nice();
         .range([2, 5]);
 
-    // Add Axes Titles
+    svg = d3.select('body')
+        .append('svg')
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
+        .append('g')
+        .attr('class', 'svg_chart')
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+    // add axes titles
     svg.append("text")
         .attr("x", -40)
         .attr("y", 450)
@@ -55,6 +55,7 @@ function initialSvgSetup() {
         .style("font-weight", "bold")
         .text("GDP");
 
+    // display year in the chart background
     svg.append("text")
         .attr("x", 40)
         .attr("y", 100)
@@ -66,6 +67,7 @@ function initialSvgSetup() {
         .attr("transform", "scale(3)")
         .text(displayYear);
 
+    // create axes
     svg.append('g')
         .attr('transform', 'translate(0,' + height + ')')
         .attr('id', 'x-axis');
@@ -74,6 +76,26 @@ function initialSvgSetup() {
         .attr('transform', 'translate(0,0)')
         .attr('id', 'y-axis');
 
+    // create the horizontal grid lines
+    svg.append("g")
+        .attr("class", "grid")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(xScale)
+            .tickSize(-height)
+            .tickFormat(""));
+
+    // create the vertical grid lines
+    svg.append("g")
+        .attr("class", "grid")
+        .call(d3.axisLeft(yScale)
+            .tickSize(-width)
+            .tickFormat(""));
+
+
     // create a group to include all the bubbles
     d3.select('.svg_chart').append('g').attr('class', 'bubble_group');
+
+    // call axes
+    svg.select("#x-axis").call(xAxis);
+    svg.select("#y-axis").call(yAxis);
 }

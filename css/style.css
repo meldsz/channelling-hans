@@ -1,0 +1,5 @@
+.grid {
+    stroke: lightgrey;
+    opacity: 0.3;
+    stroke-dasharray: 1, 3;
+}
