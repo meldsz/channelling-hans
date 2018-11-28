@@ -6,5 +6,5 @@ function displayYearlyData() {
             displayYear = minYear;
         }
         generateVisualisation();
-    },1000)
+    }, 1000)
 }

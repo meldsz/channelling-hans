@@ -24,6 +24,8 @@ function initialSvgSetup() {
     yAxis = d3.axisLeft()
         .scale(yScale);
 
+    color = d3.scaleOrdinal(d3.schemeCategory10);
+
     // square root scale.
     radius = d3.scaleSqrt()
         .domain([0, 1e7]).nice()

@@ -3,9 +3,7 @@ function generateVisualisation() {
     // filter all the data to only include data for display year
     const filteredDataset = dataset.filter(data => data.year == displayYear);
 
-    color = d3.scaleOrdinal(d3.schemeCategory10);
-
-    let transition = d3.transition().duration(1000);
+    let transition = d3.transition().duration(600);
 
     // join
     const bubble = svg.select(".bubble_group")
@@ -16,8 +14,7 @@ function generateVisualisation() {
     bubble.exit().remove();
 
     // update
-    bubble
-        .transition(transition)
+    bubble.transition(transition)
         .attr("id", data => "bubble_" + data.Country)
         .style("stroke", "black")
         .style("stroke-opacity", .4)
