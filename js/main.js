@@ -5,6 +5,7 @@ initialSvgSetup();
 
 generateVisualisation();
 
+// slider to view data for a particular year
 createSlider();
 
 var legend = svg.selectAll('legend')

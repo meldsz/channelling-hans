@@ -112,9 +112,9 @@ function createSlider() {
         .property("value", minYear)
         .attr("type", "range")
         .attr("id", "yearSlider")
-        .on("input", data => {
-            displayYear = d3.select("#yearSlider").property("value")
-            generateVisualisation()
+        .on("input", () => {
+            displayYear = d3.select("#yearSlider").property("value");
+            generateVisualisation();
         })
 
 

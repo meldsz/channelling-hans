@@ -7,10 +7,9 @@ function generateVisualisation() {
 
     const bubble = svg.select(".bubble_group")
         .selectAll("circle")
-        .data(filteredDataset, data => data.population)
+        .data(filteredDataset, data => data.population);
 
-    bubble
-        .attr("id", data => "bubble_" + data.Country)
+    bubble.attr("id", data => "bubble_" + data.Country)
         .transition()
         .duration(1000)
         .ease(d3.easeQuad)
@@ -19,7 +18,7 @@ function generateVisualisation() {
         .attr('r', data => radius(data.population))
         .style('fill', data => color(data.region))
         .style("stroke", "black")
-        .style("stroke-opacity", .4)
+        .style("stroke-opacity", .4);
 
     bubble.enter()
         .append("circle")
@@ -29,7 +28,7 @@ function generateVisualisation() {
         .attr("id", data => "bubble_" + data.Country)
         .attr("cx", data => xScale(data.gdp))
         .attr("cy", data => yScale(data.CompIndex))
-        .attr('r', data => radius(data.population))
+        .attr('r', data => radius(data.population));
     // .transition()
     // .delay(1000);
 
@@ -40,5 +39,6 @@ function generateVisualisation() {
         .text(data => data.Country);
 
     bubble.exit().remove();
+
     d3.select("#yearText").text(displayYear);
 }
