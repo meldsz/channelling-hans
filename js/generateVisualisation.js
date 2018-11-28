@@ -9,17 +9,33 @@ function generateVisualisation() {
         .selectAll("circle")
         .data(filteredDataset, data => data.population)
 
-    bubble.enter()
-        .append("circle")
+    bubble
         .attr("id", data => "bubble_" + data.Country)
+        .transition()
+        .duration(1000)
+        .ease(d3.easeQuad)
         .attr("cx", data => xScale(data.gdp))
         .attr("cy", data => yScale(data.CompIndex))
         .attr('r', data => radius(data.population))
         .style('fill', data => color(data.region))
         .style("stroke", "black")
-        .style("stroke-opacity", .4);
+        .style("stroke-opacity", .4)
+
+    bubble.enter()
+        .append("circle")
+        .style('fill', data => color(data.region))
+        .style("stroke", "black")
+        .style("stroke-opacity", .4)
+        .attr("id", data => "bubble_" + data.Country)
+        .attr("cx", data => xScale(data.gdp))
+        .attr("cy", data => yScale(data.CompIndex))
+        .attr('r', data => radius(data.population))
+    // .transition()
+    // .delay(1000);
 
     bubble.append('title')
+        .transition()
+        .duration(1000)
         .attr('x', data => radius(data.population))
         .text(data => data.Country);
 

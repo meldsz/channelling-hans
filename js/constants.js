@@ -98,4 +98,24 @@ function initialSvgSetup() {
     // call axes
     svg.select("#x-axis").call(xAxis);
     svg.select("#y-axis").call(yAxis);
+
+
+}
+
+function createSlider() {
+    // create a slider and display the data according to the picked year
+    slider = d3.select("body")
+        .append("div")
+        .append("input")
+        .attr("min", minYear)
+        .attr("max", maxYear)
+        .property("value", minYear)
+        .attr("type", "range")
+        .attr("id", "yearSlider")
+        .on("input", data => {
+            displayYear = d3.select("#yearSlider").property("value")
+            generateVisualisation()
+        })
+
+
 }

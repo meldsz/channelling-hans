@@ -5,6 +5,8 @@ initialSvgSetup();
 
 generateVisualisation();
 
+createSlider();
+
 var legend = svg.selectAll('legend')
     .data(color.domain())
     .enter().append('g')
@@ -27,3 +29,4 @@ legend.append('text')
     .text(function (d) {
         return d;
     });
+
