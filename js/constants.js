@@ -12,17 +12,27 @@ function initialSvgSetup() {
     xMin = d3.min(dataset.map(data => +data.gdp));
     xMax = d3.max(dataset.map(data => +data.gdp));
 
+    const roundedXMax = Math.round((xMax / 5) / 1000) * 1000
+
+    xDomainValues = [xMin, 500, 1000, 2000, 5000, 10000, roundedXMax]
+    xTickValues = [0, 500, 1000, 2000, 5000, 10000, roundedXMax]
+
     // define scales and axes
     xScale = d3.scaleLinear()
-        .domain([0, xMax / 5]).nice()
-        .range([0, width]);
+        .domain(xDomainValues).nice()
+        .range([0, 200, 300, 400, 500, 700, width]);
     yScale = d3.scaleLinear()
         .domain(d3.extent(dataset, data => data.CompIndex)).nice()
         .range([height, 0]);
     xAxis = d3.axisBottom()
-        .scale(xScale).ticks(5);
+        .scale(xScale)
+        .tickValues(xTickValues)
+    // .ticks(5);
     yAxis = d3.axisLeft()
         .scale(yScale);
+
+    const rightAxis = d3.axisRight(d3.scaleLinear().range([height,0])).ticks(0);
+    const topAxis = d3.axisTop(d3.scaleLinear().range([0,width])).ticks(0);
 
     color = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -78,11 +88,21 @@ function initialSvgSetup() {
         .attr('transform', 'translate(0,0)')
         .attr('id', 'y-axis');
 
+    svg.append("g")
+        .attr("class", "axis")
+        .call(topAxis);
+
+    svg.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(" + (width) + ",0)")
+        .call(rightAxis);
+
     // create the horizontal grid lines
     svg.append("g")
         .attr("class", "grid")
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(xScale)
+            .tickValues(xTickValues)
             .tickSize(-height)
             .tickFormat(""));
 
@@ -100,8 +120,6 @@ function initialSvgSetup() {
     // call axes
     svg.select("#x-axis").call(xAxis);
     svg.select("#y-axis").call(yAxis);
-
-
 }
 
 function createSlider() {
