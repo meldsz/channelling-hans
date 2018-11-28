@@ -20,7 +20,7 @@ function initialSvgSetup() {
     // define scales and axes
     xScale = d3.scaleLinear()
         .domain(xDomainValues).nice()
-        .range([0, 200, 300, 400, 500, 700, width]);
+        .range([0, 150, 250, 450, 650, 750, width]);
     yScale = d3.scaleLinear()
         .domain(d3.extent(dataset, data => data.CompIndex)).nice()
         .range([height, 0]);
