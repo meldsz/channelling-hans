@@ -5,21 +5,28 @@ function generateVisualisation() {
 
     color = d3.scaleOrdinal(d3.schemeCategory10);
 
+    let transition = d3.transition().duration(1000);
+
+    // join
     const bubble = svg.select(".bubble_group")
         .selectAll("circle")
-        .data(filteredDataset, data => data.population);
+        .data(filteredDataset);
 
-    bubble.attr("id", data => "bubble_" + data.Country)
-        .transition()
-        .duration(1000)
-        .ease(d3.easeQuad)
+    // exit
+    bubble.exit().remove();
+
+    // update
+    bubble
+        .transition(transition)
+        .attr("id", data => "bubble_" + data.Country)
+        .style("stroke", "black")
+        .style("stroke-opacity", .4)
         .attr("cx", data => xScale(data.gdp))
         .attr("cy", data => yScale(data.CompIndex))
         .attr('r', data => radius(data.population))
-        .style('fill', data => color(data.region))
-        .style("stroke", "black")
-        .style("stroke-opacity", .4);
+        .style('fill', data => color(data.region));
 
+    // enter
     bubble.enter()
         .append("circle")
         .style('fill', data => color(data.region))
@@ -28,17 +35,14 @@ function generateVisualisation() {
         .attr("id", data => "bubble_" + data.Country)
         .attr("cx", data => xScale(data.gdp))
         .attr("cy", data => yScale(data.CompIndex))
+        .transition(transition)
         .attr('r', data => radius(data.population));
-    // .transition()
-    // .delay(1000);
 
     bubble.append('title')
-        .transition()
-        .duration(1000)
         .attr('x', data => radius(data.population))
+        .transition()
         .text(data => data.Country);
 
-    bubble.exit().remove();
 
     d3.select("#yearText").text(displayYear);
 }
