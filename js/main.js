@@ -1,5 +1,8 @@
 //Data
 var dataset = JSON.parse(localStorage.getItem('Data'));
+minYear = d3.min(dataset.map(data => +data.year));
+maxYear = d3.max(dataset.map(data => +data.year));
+displayYear = minYear;
 
 initialSvgSetup();
 

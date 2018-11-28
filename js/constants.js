@@ -4,18 +4,15 @@ function initialSvgSetup() {
     width = 1000 - margin.left - margin.right;
     height = 700 - margin.top - margin.bottom;
 
-    minYear = d3.min(dataset.map(data => +data.year));
-    maxYear = d3.max(dataset.map(data => +data.year));
-    displayYear = minYear;
-
     // calculate minimum and maximum values for GDP for the axes
     xMin = d3.min(dataset.map(data => +data.gdp));
     xMax = d3.max(dataset.map(data => +data.gdp));
 
-    const roundedXMax = Math.round((xMax / 5) / 1000) * 1000
+    const roundedXMax = Math.round((xMax / 5) / 1000) * 1000;
 
-    xDomainValues = [xMin, 500, 1000, 2000, 5000, 10000, roundedXMax]
-    xTickValues = [0, 500, 1000, 2000, 5000, 10000, roundedXMax]
+    // add custom values to x scale
+    xDomainValues = [xMin, 500, 1000, 2000, 5000, 10000, roundedXMax];
+    xTickValues = [0, 500, 1000, 2000, 5000, 10000, roundedXMax];
 
     // define scales and axes
     xScale = d3.scaleLinear()
@@ -24,15 +21,13 @@ function initialSvgSetup() {
     yScale = d3.scaleLinear()
         .domain(d3.extent(dataset, data => data.CompIndex)).nice()
         .range([height, 0]);
-    xAxis = d3.axisBottom()
+    const xAxis = d3.axisBottom()
         .scale(xScale)
-        .tickValues(xTickValues)
-    // .ticks(5);
-    yAxis = d3.axisLeft()
+        .tickValues(xTickValues);
+    const yAxis = d3.axisLeft()
         .scale(yScale);
-
-    const rightAxis = d3.axisRight(d3.scaleLinear().range([height,0])).ticks(0);
-    const topAxis = d3.axisTop(d3.scaleLinear().range([0,width])).ticks(0);
+    const rightAxis = d3.axisRight(d3.scaleLinear().range([height, 0])).ticks(0);
+    const topAxis = d3.axisTop(d3.scaleLinear().range([0, width])).ticks(0);
 
     color = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -136,6 +131,4 @@ function createSlider() {
             displayYear = d3.select("#yearSlider").property("value");
             generateVisualisation();
         })
-
-
 }
