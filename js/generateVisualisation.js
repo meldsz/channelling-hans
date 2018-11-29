@@ -16,13 +16,14 @@ function generateVisualisation() {
     // update
     bubble.transition(transition)
         .attr("id", data => "bubble_" + data.Country)
+
         .style("stroke", "black")
         .style("stroke-opacity", .4)
         .attr("cx", data => xScale(data.gdp / 5))
         .attr("cy", data => yScale(data.CompIndex))
         .attr('r', data => radius(data.population))
         .style('fill', data => color(data.region));
-
+    
     // enter
     bubble.enter()
         .append("circle")
@@ -32,14 +33,10 @@ function generateVisualisation() {
         .attr("id", data => "bubble_" + data.Country)
         .attr("cx", data => xScale(data.gdp / 5))
         .attr("cy", data => yScale(data.CompIndex))
-        .transition(transition)
-        .attr('r', data => radius(data.population));
-
-    bubble.append('title')
-        .attr('x', data => radius(data.population))
-        .transition()
-        .text(data => data.Country);
-
+        .attr('r', data => radius(data.population))
+        .append('title')
+        .text(data => data.Country)  
+        .transition(transition)  
 
     d3.select("#yearText").text(displayYear);
 }

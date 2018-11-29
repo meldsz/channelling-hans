@@ -1,5 +1,5 @@
 const jsonArr = [];
-d3.csv("./data/GCI_CompleteData4.csv")
+d3.csv("./data/Processed_GCI_Data.csv")
     .then(function (d) {
         for (let i = 0; i < d3.keys(d).length - 1; i++) {
             const c = d[i].Country;

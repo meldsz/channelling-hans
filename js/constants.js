@@ -43,7 +43,13 @@ function initialSvgSetup() {
         .append('g')
         .attr('class', 'svg_chart')
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-
+   
+    //svg for legend
+        legend_svg = d3.select('body')
+        .append('svg')
+        .attr('width', 500)
+        .attr('height', height + margin.top + margin.bottom)
+    
     // add axes titles
     svg.append("text")
         .attr("x", -40)
