@@ -1,8 +1,8 @@
 function initialSvgSetup() {
     // Define Margins, height and width for the svg canvas
-    let margin = {top: 30, right: 50, bottom: 100, left: 100};
+    let margin = {top: 30, right: 20, bottom: 100, left: 100};
     width = 1000 - margin.left - margin.right;
-    height = 700 - margin.top - margin.bottom;
+    height = 570 - margin.top - margin.bottom;
 
     // calculate minimum and maximum values for GDP for the axes
     const xMin = d3.min(dataset.map(data => +data.gdp));
@@ -11,13 +11,13 @@ function initialSvgSetup() {
     const roundedXMax = Math.round((xMax / 5) / 1000) * 1000;
 
     // add custom values to x scale
-    const xDomainValues = [xMin, 500, 1000, 2000, 5000, 10000, roundedXMax];
-    const xTickValues = [0, 500, 1000, 2000, 5000, 10000, roundedXMax];
+    const xDomainValues = [xMin, 500, 1000, 2000, 4000, 8000, 16000, roundedXMax];
+    const xTickValues = [0, 500, 1000, 2000, 4000, 8000, 16000, roundedXMax];
 
     // define scales and axes
     xScale = d3.scaleLinear()
         .domain(xDomainValues).nice()
-        .range([0, 150, 250, 450, 650, 750, width]);
+        .range([0, 120, 250, 375, 500, 675, 750, width]);
     yScale = d3.scaleLinear()
         .domain(d3.extent(dataset, data => data.CompIndex)).nice()
         .range([height, 0]);
@@ -47,12 +47,12 @@ function initialSvgSetup() {
     //svg for legend
         legend_svg = d3.select('body')
         .append('svg')
-        .attr('width', 500)
+        .attr('width',"20vw")
         .attr('height', height + margin.top + margin.bottom)
     
     // add axes titles
     svg.append("text")
-        .attr("x", -40)
+        .attr("x", 40)
         .attr("y", 450)
         .style("font-family", "Helvetica")
         .style("font-size", "25px")
@@ -62,7 +62,7 @@ function initialSvgSetup() {
 
     svg.append("text")
         .attr("x", width / 2)
-        .attr("y", 630)
+        .attr("y", 490)
         .style("font-family", "Helvetica")
         .style("font-size", "25px")
         .style("font-weight", "bold")
