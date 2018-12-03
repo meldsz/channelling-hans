@@ -4,12 +4,33 @@
     <meta charset="UTF-8">
     <title>Channelling Hans</title>
     <script type="text/javascript" src="./lib/d3/d3.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css"/>
     <script type="text/javascript" src="./js/dataPrep.js" charset="utf-8"></script>
-    
+    <script src="./js/generateVisualisation.js"></script>
+    <script src="./js/constants.js"></script>
+    <script src="./js/animation.js"></script>
+    <link rel="stylesheet" href="./css/style.css"/>
 </head>
 <body>
-       <div id="bubble_chart">
-            <script src="./js/main.js"></script>
+<script src="./js/main.js"></script>
+<div class="controls-container">
+    <div class="row ">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <input type="button" class="btn btn-primary btn-md" value="Play" id="play" onClick="displayYearlyData()"> </input>
         </div>
+        <div class="col-sm-2"></div>
+
+    </div>
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8" class="slide-container">
+        </div>
+        <div class="col-sm-2"></div>
+
+    </div>
+
+</div>
 </body>
 </html>
