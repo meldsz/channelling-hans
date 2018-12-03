@@ -152,3 +152,26 @@ function createSlider() {
         .append("span")
         .html(maxYear);
 }
+
+function createCountryDropdown() {
+    const filteredTraceDataset = dataset.filter(data => displayYear == data.year);
+
+    const countryList = filteredTraceDataset.filter(data => data.Country);
+
+    const dropdown = d3.select(".slider-container")
+        .append("div")
+        .append("select")
+        // .append("option")
+        // .attr("value","")
+        // .attr("label","---Select Country---")
+        .selectAll("option")
+        .data(countryList)
+        .attr("multiple", "multiple");
+
+    dropdown.data(countryList)
+        .enter()
+        .append("option", data => data.Country)
+        .attr("value", data => data.Country)
+        .attr("label", data => data.Country);
+
+}

@@ -15,3 +15,8 @@ function displayYearlyData() {
     }
 
 }
+
+function traceData() {
+    // control to trace journey of selected country
+
+}

@@ -11,6 +11,11 @@ generateVisualisation();
 // slider to view data for a particular year
 createSlider();
 
+// dropdown to select country
+createCountryDropdown();
+
+traceData();
+
 //legend to distinguish regions by color
 var legend = legend_svg.selectAll('legend')
     .data(color.domain())
