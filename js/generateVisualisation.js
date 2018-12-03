@@ -36,7 +36,7 @@ function generateVisualisation() {
         .attr('r', data => radius(data.population))
         .append('title')
         .text(data => data.Country)  
-        .transition(transition)  
+        .transition(transition);
 
     d3.select("#yearText").text(displayYear);
 }
