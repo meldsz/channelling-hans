@@ -43,13 +43,13 @@ function initialSvgSetup() {
         .append('g')
         .attr('class', 'svg_chart')
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-   
+
     //svg for legend
-        legend_svg = d3.select('body')
+    legend_svg = d3.select('body')
         .append('svg')
-        .attr('width',"20vw")
+        .attr('width', "20vw")
         .attr('height', height + margin.top + margin.bottom)
-    
+
     // add axes titles
     svg.append("text")
         .attr("x", 40)
@@ -124,10 +124,19 @@ function initialSvgSetup() {
 }
 
 function createSlider() {
+
     // create a slider and display the data according to the picked year
     slider = d3.select("body")
         .append("div")
-        .append("input")
+        .attr("class", "slider-container")
+        .attr("style", "padding-left:50px");
+
+    // display minimum year for the slider
+    d3.select(".slider-container")
+        .append("span")
+        .html(minYear);
+
+    slider.append("input")
         .attr("min", minYear)
         .attr("max", maxYear)
         .property("value", minYear)
@@ -136,5 +145,10 @@ function createSlider() {
         .on("input", () => {
             displayYear = d3.select("#yearSlider").property("value");
             generateVisualisation();
-        })
+        });
+
+    // display maximum year for the slider
+    d3.select(".slider-container")
+        .append("span")
+        .html(maxYear);
 }

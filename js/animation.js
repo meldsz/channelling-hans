@@ -1,6 +1,6 @@
 function displayYearlyData() {
-    if (document.getElementById("play").value==="Play"){
-        document.getElementById("play").value="Stop";
+    if (d3.select("#play").property("value") === "Play") {
+        d3.select("#play").property("value", "Stop");
         intervalId = setInterval(() => {
             displayYear++;
             if (displayYear > maxYear) {
@@ -9,10 +9,9 @@ function displayYearlyData() {
             generateVisualisation();
         }, 1000)
     }
-    else
-    {
-        document.getElementById("play").value="Play";
+    else {
+        d3.select("#play").property("value", "Play");
         clearInterval(intervalId);
     }
-    
+
 }
