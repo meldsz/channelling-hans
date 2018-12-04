@@ -1,12 +1,12 @@
 function generateVisualisation() {
 
     // filter all the data to only include data for display year
-     const filteredDataset = dataset.filter(data => data.year == displayYear);
+    const filteredDataset = dataset.filter(data => data.year == displayYear);
 
     let transition = d3.transition().duration(600);
 
     // join
-     bubble = svg.select(".bubble_group")
+    bubble = svg.select(".bubble_group")
         .selectAll("circle")
         .data(filteredDataset);
 
@@ -35,11 +35,21 @@ function generateVisualisation() {
         .attr("cx", data => xScale(data.gdp / 5))
         .attr("cy", data => yScale(data.CompIndex))
         .attr('r', data => radius(data.population))
+        .on('mouseover', data => {
+            // display data in detail for a country on mover hover
+            dataLine.style('display', null);
+            displayDataOnFocus(data)
+        })
+        .on('mouseout', () => {
+            // hide the focus line and tip on mouse out
+            dataLine.style('display', 'none');
+            tip.style("opacity", 0);
+        })
         .append('title')
-        .text(data => data.Country)
+        // .text(data => data.Country)
         .transition(transition);
 
-    // move the slider for each year
-    d3.select("#yearSlider").property("value",displayYear);
+    // move the slider for each year for play and trace
+    d3.select("#yearSlider").property("value", displayYear);
     d3.select("#yearText").text(displayYear);
 }

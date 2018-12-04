@@ -61,3 +61,32 @@ function traceData() {
     }
 
 }
+
+function displayDataOnFocus(countryData) {
+    const cx = xScale(+countryData.gdp / 5);
+    const cy = yScale(+countryData.CompIndex);
+
+    // set the start and end for vertical line
+    verticalLine.attr("x1", cx)
+        .attr("y1", cy)
+        .attr("x2", cx)
+        .attr("y2", height);
+
+    // set the start and end for horizontal line
+    horizontalLine.attr("x1", 0)
+        .attr("y1", cy)
+        .attr("x2", cx)
+        .attr("y2", cy);
+
+    tip.style("left", d3.event.pageX + "px")
+        .style("top", d3.event.pageY + 20 + "px")
+        .style("opacity", 1.0)
+
+    tipTitle.html(countryData.Country.bold() + " " + countryData.year.bold())
+
+    tipContent.html(
+        "GDP: " + countryData.gdp + "<br>" +
+        "GCI: " + countryData.CompIndex + "<br>" +
+        "Population: " + countryData.population + "<br>"
+    )
+}

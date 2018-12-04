@@ -1,6 +1,6 @@
 function initialSvgSetup() {
     // Define Margins, height and width for the svg canvas
-    let margin = {top: 30, right: 20, bottom: 100, left: 100};
+    margin = {top: 30, right: 20, bottom: 100, left: 100};
     width = 1000 - margin.left - margin.right;
     height = 570 - margin.top - margin.bottom;
 
@@ -173,6 +173,52 @@ function createCountryDropdown() {
         .append("option", data => data.Country)
         .attr("value", data => data.Country)
         .attr("label", data => data.Country)
+}
 
+function displayLegend() {
+    //legend to distinguish regions by color
+    const legend = legend_svg.selectAll('legend')
+        .data(color.domain())
+        .enter().append('g')
+        .attr('class', 'legend')
+        .attr('transform', function (d, i) {
+            return 'translate(0,' + i * 20 + ')';
+        });
 
+    legend.append('rect')
+        .attr('x', 10)
+        .attr('y', 20)
+        .attr('width', 18)
+        .attr('height', 18)
+        .style('fill', color);
+
+    legend.append('text')
+        .attr('x', 30)
+        .attr('y', 30)
+        .attr('dy', '.35em')
+        // .style('text-anchor', 'end')
+        .text(function (d) {
+            return d;
+        });
+}
+
+function initializeDataOnFocus() {
+    dataLine = d3.select('.svg_chart')
+        .append('g')
+        .attr('id', 'display-data')
+        .style("display", "none");
+
+    verticalLine = dataLine.append('line').attr('class', 'focus-line');
+    horizontalLine = dataLine.append('line').attr('class', 'focus-line');
+
+    // create a tip to display data in detail for country
+    tip = d3.select('body')
+        .append("div")
+        .attr("class", "tip");
+
+    tipTitle = tip.append("div")
+        .attr("class", "tip-title");
+
+    tipContent = tip.append("div").append("div")
+        .attr("class", "tip-content");
 }
