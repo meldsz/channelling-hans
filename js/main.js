@@ -1,10 +1,10 @@
 //Data
 var dataset = JSON.parse(localStorage.getItem('Data'));
-minYear = d3.min(dataset.map(data => +data.year));
-maxYear = d3.max(dataset.map(data => +data.year));
-displayYear = minYear;
+var minYear = d3.min(dataset.map(data => +data.year));
+var maxYear = d3.max(dataset.map(data => +data.year));
+var displayYear = minYear;
 var intervalId;
-selectedCountry = "";
+var selectedCountry = "";
 var trace = false;
 
 initialSvgSetup();
@@ -12,7 +12,7 @@ initialSvgSetup();
 // slider to view data for a particular year
 createSlider();
 
-// dropdown to select country
+// create drop down to select country
 createCountryDropdown();
 
 generateVisualisation();

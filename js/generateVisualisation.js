@@ -39,5 +39,7 @@ function generateVisualisation() {
         .text(data => data.Country)
         .transition(transition);
 
+    // move the slider for each year
+    d3.select("#yearSlider").property("value",displayYear);
     d3.select("#yearText").text(displayYear);
 }
