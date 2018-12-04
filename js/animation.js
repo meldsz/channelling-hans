@@ -9,16 +9,16 @@ function displayYearlyData() {
                 displayYear = minYear;
             }
             if (trace) {
-                generateVisualisation();
                 traceDataVisualisation();
+                generateVisualisation();
             } else {
                 bubble.exit().remove();
                 d3.select('#trace').remove();
                 generateVisualisation();
             }
 
-        }, 500)
-        bubble.exit().remove()
+        }, 500);
+        bubble.exit().remove();
     } else {
         d3.select("#play").property("value", "Play");
         trace = false;
@@ -48,15 +48,15 @@ function traceDataVisualisation() {
 
 function traceData() {
     if (selectedCountry) {
-
         trace = true;
-        bubble.style("fill-opacity", 0.3);
-        clearInterval(intervalId)
-        displayYearlyData();
-        traceDataVisualisation();
-        d3.select('#trace').remove()
+        if (d3.select("#play").property("value") === "Play") {
+            bubble.style("fill-opacity", 0.3);
+            clearInterval(intervalId);
+            displayYearlyData();
+            d3.select('#trace').remove();
+        }
     } else {
-        alert("select country")
+        alert("select country");
         trace = false;
     }
 
