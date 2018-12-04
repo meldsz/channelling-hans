@@ -16,7 +16,6 @@ function displayYearlyData() {
                 d3.select('#trace').remove();
                 generateVisualisation();
             }
-
         }, 500);
         bubble.exit().remove();
     } else {
@@ -80,13 +79,12 @@ function displayDataOnFocus(countryData) {
 
     tip.style("left", d3.event.pageX + "px")
         .style("top", d3.event.pageY + 20 + "px")
-        .style("opacity", 1.0)
+        .style("opacity", 1);
 
-    tipTitle.html(countryData.Country.bold() + " " + countryData.year.bold())
+    // display country and year as the title in a tip
+    tipTitle.html(countryData.Country.bold() + " " + countryData.year.bold());
 
-    tipContent.html(
-        "GDP: " + countryData.gdp + "<br>" +
-        "GCI: " + countryData.CompIndex + "<br>" +
-        "Population: " + countryData.population + "<br>"
-    )
+    // display data in detail
+    tipContent.html(`GDP: ${countryData.gdp} <br> GCI: 
+    ${countryData.CompIndex} <br> Population: ${countryData.population} <br>`);
 }

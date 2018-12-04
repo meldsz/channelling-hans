@@ -38,7 +38,7 @@ function generateVisualisation() {
         .on('mouseover', data => {
             // display data in detail for a country on mover hover
             dataLine.style('display', null);
-            displayDataOnFocus(data)
+            displayDataOnFocus(data);
         })
         .on('mouseout', () => {
             // hide the focus line and tip on mouse out
