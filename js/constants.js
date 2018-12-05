@@ -172,7 +172,7 @@ function createControls() {
 
     const countryList = dataset.filter(data => displayYear == data.year).filter(data => data.Country);
     // countryList.unshift({Country: '---select country---'});
-    
+
     const dropdown = d3.select("body")
         .append("div")
         .attr('class', 'select-container')
