@@ -215,8 +215,8 @@ function createControls() {
         .attr('title', 'click to view animated trace of the selected country')
         .on("click", () => {
             traceData();
-        });
-        .attr("label", data => data.Country)
+        })
+        // .attr("label", data => data.Country);
 }
 
 function displayLegend() {

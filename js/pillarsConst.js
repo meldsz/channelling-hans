@@ -1,6 +1,6 @@
 function createPillar(year) {
     // Define Margins, height and width for the svg canvas
-    let margin = {top: 30, right: 20, bottom: 200, left: 100};
+    let margin = { top: 30, right: 20, bottom: 200, left: 100 };
     pillarWidth = 1000 - margin.left - margin.right;
     pillarHeight = 570 - margin.top - margin.bottom;
 
@@ -12,7 +12,6 @@ function createPillar(year) {
     const xDomainValues = ["1st_pillar_Institutions", "2nd_pillar_Infrastructure", "3rd_pillar_Macroeconomic_environment", "4th_pillar_Health_and_primary_education", "5th_pillar_Higher_education_and_training", "6th_pillar_Goods_market_efficiency", "7th_pillar_Labor_market_efficiency", "8th_pillar_Financial_market_development", "9th_pillar_Technological_readiness", "10th_pillar_Market_size", "11th_pillar_Business_sophistication_", "12th_pillar_Innovation"];
     const xTickValues = ["", "Institutions", "Infrastructure", "Macroeconomic Environment", "Health and Primary education", "Higher education and training", "Goods market efficiency", "Labor market efficiency", "Financial market development", "Technological readiness", "Market size", "Business sophistication", "Innovation"];
     const xRange = [0, 70, 140, 210, 280, 350, 420, 490, 560, 630, 700, 770, 840, pillarWidth];
-
     // define scales and axes
     pillarXScale = d3.scaleOrdinal()
         .range(xRange);
@@ -92,28 +91,23 @@ function createPillar(year) {
     pillarSvg.select("#y-axis").call(pillarYAxis);
 
     //generate bars
-
     var pillarDataset = [];
-    for (let i = 0; i < pillarCountries.length; i++) {
+    for (i = 0; i < pillarCountries.length; i++) {
         pillarDataset.push(dataset.filter(data => pillarCountries[i] == data.Country).filter(data => data.year == year)[0]);
     }
     if (pillarDataset.length > 2) {
         alert("Cannot Select more than 2 countries");
     }
-    for (let j = 0; j < 2; j++) {
-        for (let i = 0; i < xDomainValues.length; i++) {
+    for (var j = 0; j < 2; j++) {
+        for (i = 0; i < xDomainValues.length; i++) {
             d3.select(".pillar-chart").append("rect")
                 .attr("x", (+xRange[i + 1] - (j + 1) * 20))
-                .attr("y", function () {
-                    return pillarYScale(pillarDataset[j].pillars[i])
-                })
+                .attr("y", function () { return pillarYScale(pillarDataset[j].pillars[i]) })
                 .attr("width", 20)
-                .attr("height", function () {
-                    return +(pillarHeight - pillarYScale(+pillarDataset[j].pillars[i]))
-                })
+                .attr("height", function () { return +(pillarHeight - pillarYScale(+pillarDataset[j].pillars[i])) })
                 .style("fill", color(pillarDataset[j].region))
                 .style("stroke", "black");
         }
     }
-}
 
+}
