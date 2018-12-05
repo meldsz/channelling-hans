@@ -8,14 +8,12 @@ function initialSvgSetup() {
     const xMin = d3.min(dataset.map(data => +data.gdp));
     const xMax = d3.max(dataset.map(data => +data.gdp));
 
-    const roundedXMax = Math.round((xMax) / 10000) * 10000;
+    const roundedXMax = Math.round((xMax) / 10000) * 10000 + 20000;
     // const roundedXMax = Math.round((xMax / 5) / 1000) * 1000;
 
     // add custom values to x scale
     const xDomainValues = [xMin, 2000, 5000, 10000, 20000, 40000, 80000, roundedXMax];
-    // const xDomainValues = [xMin, 500, 1000, 2000, 4000, 8000, 16000, roundedXMax];
     const xTickValues = [0, 2000, 5000, 10000, 20000, 40000, 80000, roundedXMax];
-    // const xTickValues = [0, 500, 1000, 2000, 4000, 8000, 16000, roundedXMax];
 
     // define scales and axes
     xScale = d3.scaleLinear()
