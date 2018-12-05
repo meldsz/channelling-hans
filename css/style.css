@@ -51,6 +51,10 @@
     border-bottom: 1px solid grey;
 }
 
-.select-container {
-    padding-top: 30px;
+.select-container, .trace-container {
+    padding: 10px 0 15px 50px;
+}
+
+#trace-button {
+    margin-left: 15px;
 }

@@ -166,9 +166,9 @@ function createControls() {
     // create a dropdown to select countries for the trace
 
     const countryList = dataset.filter(data => displayYear == data.year).filter(data => data.Country);
-    countryList.unshift({Country:'---select country---'})
-    console.log(countryList)
-    dropdown = d3.select("body")
+    countryList.unshift({Country: '---select country---'});
+
+    const dropdown = d3.select("body")
         .append("div")
         .attr('class', 'select-container')
         .append("select")
@@ -185,22 +185,27 @@ function createControls() {
         .attr("value", data => data.Country)
         .attr("label", data => data.Country);
 
-    d3.select('.select-container').append("input")
-        .attr('type', 'button')
-        .attr('class', 'btn btn-primary btn-md')
-        .property("value", 'Trace Animation')
-        .attr("id", 'trace-button')
-        .on("click", () => {
-            traceData();
-        });
+    const traceContainer = d3.select('body').append('div')
+        .attr('class', 'trace-container');
 
-    d3.select('.select-container').append("input")
+    traceContainer.append("input")
         .attr('type', 'button')
         .attr('class', 'btn btn-primary btn-md')
-        .property("value", 'Static Trace')
+        .property("value", 'Trace')
         .attr("id", 'static-trace-button')
+        .attr('title','click to view static trace of the selected country')
         .on("click", () => {
             staticTraceData();
+        });
+
+    traceContainer.append("input")
+        .attr('type', 'button')
+        .attr('class', 'btn btn-primary btn-md')
+        .property("value", 'Trace Play')
+        .attr("id", 'trace-button')
+        .attr('title','click to view animated trace of the selected country')
+        .on("click", () => {
+            traceData();
         });
 }
 
