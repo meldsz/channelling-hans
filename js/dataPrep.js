@@ -22,5 +22,5 @@ d3.csv("./data/Processed_GCI_Data.csv")
         }
         localStorage.setItem('Data', JSON.stringify(jsonArr));
     }).catch(err => {
-        console.log(err);
-    });
+    console.log(err);
+});

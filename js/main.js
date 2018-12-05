@@ -5,6 +5,7 @@ var maxYear = d3.max(dataset.map(data => +data.year));
 var displayYear = minYear;
 var intervalId;
 var selectedCountry = "";
+var pillarCountries = [];
 var trace = false;
 var staticTrace = false;
 

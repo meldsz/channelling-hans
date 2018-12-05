@@ -177,14 +177,16 @@ function createControls() {
         .append("div")
         .attr('class', 'select-container')
         .append("select")
+        .attr("id", "countries")
+        .attr("multiple", "multiple")
         .on('change', () => {
             selectedCountry = d3.select('select').property('value');
+            pillarCountries.push(d3.select('select').property('value'));
             d3.select(".pillar-svg").remove();
             createPillar(displayYear);
         })
         .selectAll("option")
         .data(countryList)
-        .attr("multiple", "multiple");
 
     dropdown.data(countryList)
         .enter()
@@ -214,6 +216,7 @@ function createControls() {
         .on("click", () => {
             traceData();
         });
+        .attr("label", data => data.Country)
 }
 
 function displayLegend() {
