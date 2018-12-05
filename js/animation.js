@@ -2,10 +2,11 @@ function displayYearlyData() {
     if (d3.select("#play").property("value") === "Play") {
         d3.select("#play").property("value", "Stop");
         intervalId = setInterval(() => {
+            // d3.selectAll('#trace').remove();
             displayYear++;
             if (displayYear > maxYear) {
                 bubble.exit().remove();
-                d3.select('#trace').remove();
+                d3.selectAll('#trace').remove();
                 displayYear = minYear;
             }
             if (trace) {
@@ -23,7 +24,7 @@ function displayYearlyData() {
         trace = false;
         bubble.style("fill-opacity", 1);
         bubble.exit().remove();
-        d3.select('#trace').remove();
+        d3.selectAll('#trace').remove();
         clearInterval(intervalId);
     }
 
@@ -43,6 +44,44 @@ function traceDataVisualisation() {
         .attr("cx", xScale(filteredTraceDataset.gdp / 5))
         .attr("cy", yScale(filteredTraceDataset.CompIndex))
         .attr('r', radius(filteredTraceDataset.population));
+}
+
+function staticTraceData() {
+    if (selectedCountry) {
+        staticTrace = true;
+        displayYear = maxYear;
+        generateVisualisation();
+        d3.selectAll('#trace').remove();
+        // control to display static trace journey of selected country
+        const filteredTraceDataset = dataset.filter(data => selectedCountry == data.Country);
+        d3.select(".bubble_group")
+            .selectAll('rect')
+            .data(filteredTraceDataset)
+            .enter()
+            .append("circle")
+            .attr("id", "trace")
+            .style('fill', data => color(data.region))
+            .style("stroke", "black")
+            .style("fill-opacity", 1)
+            .attr("cx", data => xScale(data.gdp / 5))
+            .attr("cy", data => yScale(data.CompIndex))
+            .attr('r', data => radius(data.population))
+            .on('mouseover', data => {
+                // display data in detail for a country on mover hover
+                dataLine.style('display', null);
+                displayDataOnFocus(data);
+            })
+            .on('mouseout', () => {
+                // hide the focus line and tip on mouse out
+                dataLine.style('display', 'none');
+                tip.style("opacity", 0);
+            });
+    } else {
+        staticTrace = false;
+        alert('select country')
+    }
+
+
 }
 
 function traceData() {

@@ -123,19 +123,30 @@ function initialSvgSetup() {
     svg.select("#y-axis").call(yAxis);
 }
 
-function createSlider() {
-
-    // create a slider and display the data according to the picked year
+function createControls() {
+// create a slider and display the data according to the picked year
     slider = d3.select("body")
         .append("div")
         .attr("class", "slider-container")
         .attr("style", "padding-left:50px");
 
+    // play button for the animation and for the slider
+    slider.append("input")
+        .attr('type', 'button')
+        .attr('class', 'btn btn-primary btn-md')
+        .property("value", 'Play')
+        .attr("id", 'play')
+        .on("click", () => {
+            displayYearlyData();
+        });
+
     // display minimum year for the slider
     d3.select(".slider-container")
         .append("span")
+        .attr("style", "padding-left:20px")
         .html(minYear);
 
+    // add a slider
     slider.append("input")
         .attr("min", minYear)
         .attr("max", maxYear)
@@ -151,15 +162,15 @@ function createSlider() {
     d3.select(".slider-container")
         .append("span")
         .html(maxYear);
-}
 
-function createCountryDropdown() {
-    filteredTraceDataset = dataset.filter(data => displayYear == data.year);
+    // create a dropdown to select countries for the trace
 
-    const countryList = filteredTraceDataset.filter(data => data.Country);
-
-    const dropdown = d3.select(".slider-container")
+    const countryList = dataset.filter(data => displayYear == data.year).filter(data => data.Country);
+    countryList.unshift({Country:'---select country---'})
+    console.log(countryList)
+    dropdown = d3.select("body")
         .append("div")
+        .attr('class', 'select-container')
         .append("select")
         .on('change', () => {
             selectedCountry = d3.select('select').property('value');
@@ -172,7 +183,25 @@ function createCountryDropdown() {
         .enter()
         .append("option", data => data.Country)
         .attr("value", data => data.Country)
-        .attr("label", data => data.Country)
+        .attr("label", data => data.Country);
+
+    d3.select('.select-container').append("input")
+        .attr('type', 'button')
+        .attr('class', 'btn btn-primary btn-md')
+        .property("value", 'Trace Animation')
+        .attr("id", 'trace-button')
+        .on("click", () => {
+            traceData();
+        });
+
+    d3.select('.select-container').append("input")
+        .attr('type', 'button')
+        .attr('class', 'btn btn-primary btn-md')
+        .property("value", 'Static Trace')
+        .attr("id", 'static-trace-button')
+        .on("click", () => {
+            staticTraceData();
+        });
 }
 
 function displayLegend() {

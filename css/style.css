@@ -50,3 +50,7 @@
 .tip .tip-title {
     border-bottom: 1px solid grey;
 }
+
+.select-container {
+    padding-top: 30px;
+}
