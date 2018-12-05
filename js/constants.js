@@ -1,6 +1,6 @@
 function initialSvgSetup() {
     // Define Margins, height and width for the svg canvas
-    margin = {top: 30, right: 20, bottom: 100, left: 100};
+    margin = { top: 30, right: 20, bottom: 100, left: 100 };
     width = 1000 - margin.left - margin.right;
     height = 570 - margin.top - margin.bottom;
 
@@ -8,12 +8,11 @@ function initialSvgSetup() {
     const xMin = d3.min(dataset.map(data => +data.gdp));
     const xMax = d3.max(dataset.map(data => +data.gdp));
 
-    const roundedXMax = Math.round((xMax) / 10000) * 10000 + 20000;
-    // const roundedXMax = Math.round((xMax / 5) / 1000) * 1000;
+    const roundedXMax = Math.round((xMax / 5) / 1000) * 1000;
 
     // add custom values to x scale
-    const xDomainValues = [xMin, 2000, 5000, 10000, 20000, 40000, 80000, roundedXMax];
-    const xTickValues = [0, 2000, 5000, 10000, 20000, 40000, 80000, roundedXMax];
+    const xDomainValues = [xMin, 500, 1000, 2000, 4000, 8000, 16000, roundedXMax];
+    const xTickValues = [0, 500, 1000, 2000, 4000, 8000, 16000, roundedXMax];
 
     // define scales and axes
     xScale = d3.scaleLinear()
@@ -124,30 +123,19 @@ function initialSvgSetup() {
     svg.select("#y-axis").call(yAxis);
 }
 
-function createControls() {
-// create a slider and display the data according to the picked year
+function createSlider() {
+
+    // create a slider and display the data according to the picked year
     slider = d3.select("body")
         .append("div")
         .attr("class", "slider-container")
         .attr("style", "padding-left:50px");
 
-    // play button for the animation and for the slider
-    slider.append("input")
-        .attr('type', 'button')
-        .attr('class', 'btn btn-primary btn-md')
-        .property("value", 'Play')
-        .attr("id", 'play')
-        .on("click", () => {
-            displayYearlyData();
-        });
-
     // display minimum year for the slider
     d3.select(".slider-container")
         .append("span")
-        .attr("style", "padding-left:20px")
         .html(minYear);
 
-    // add a slider
     slider.append("input")
         .attr("min", minYear)
         .attr("max", maxYear)
@@ -157,24 +145,30 @@ function createControls() {
         .on("input", () => {
             displayYear = d3.select("#yearSlider").property("value");
             generateVisualisation();
+            if (selectedCountry != "") {
+                d3.select(".pillar-svg").remove();
+                createPillar(displayYear);
+            }
         });
 
     // display maximum year for the slider
     d3.select(".slider-container")
         .append("span")
         .html(maxYear);
+}
 
-    // create a dropdown to select countries for the trace
+function createCountryDropdown() {
+    filteredTraceDataset = dataset.filter(data => displayYear == data.year);
 
-    const countryList = dataset.filter(data => displayYear == data.year).filter(data => data.Country);
-    countryList.unshift({Country: '---select country---'});
+    const countryList = filteredTraceDataset.filter(data => data.Country);
 
-    const dropdown = d3.select("body")
+    const dropdown = d3.select(".slider-container")
         .append("div")
-        .attr('class', 'select-container')
         .append("select")
         .on('change', () => {
             selectedCountry = d3.select('select').property('value');
+            d3.select(".pillar-svg").remove();
+            createPillar(displayYear);
         })
         .selectAll("option")
         .data(countryList)
@@ -184,30 +178,7 @@ function createControls() {
         .enter()
         .append("option", data => data.Country)
         .attr("value", data => data.Country)
-        .attr("label", data => data.Country);
-
-    const traceContainer = d3.select('body').append('div')
-        .attr('class', 'trace-container');
-
-    traceContainer.append("input")
-        .attr('type', 'button')
-        .attr('class', 'btn btn-primary btn-md')
-        .property("value", 'Trace')
-        .attr("id", 'static-trace-button')
-        .attr('title', 'click to view static trace of the selected country')
-        .on("click", () => {
-            staticTraceData();
-        });
-
-    traceContainer.append("input")
-        .attr('type', 'button')
-        .attr('class', 'btn btn-primary btn-md')
-        .property("value", 'Trace Play')
-        .attr("id", 'trace-button')
-        .attr('title', 'click to view animated trace of the selected country')
-        .on("click", () => {
-            traceData();
-        });
+        .attr("label", data => data.Country)
 }
 
 function displayLegend() {
