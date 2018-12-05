@@ -1,4 +1,4 @@
-The visualization created is that of a bubble chart representing the data in the World Economic Forum Global Competitiveness Report.
+﻿The visualization created is that of a bubble chart representing the data in the World Economic Forum Global Competitiveness Report.
 
 The size of each bubble represents population of that country.
 Countries lying within the same regions are given the same color for its bubble. These colors are mentioned as legends for the graph.
@@ -16,3 +16,6 @@ This helps in knowing the changes that were relevant to that particular country 
 
 Selecting the country from selection/drop down creates a bar chart at the bottom displaying all the 12 pillars that contribute to Global Competitive Index. The slider can be used to traverse along the years to view data for country-year combination. 
 Further, the country selection component allows selecting upto 2 countries for comparing pillars of GCI. This creates a grouped bar chart which follows the same color scheme as the bubble chart above, showing countries belonging to one region by a particular color as mentioned in the legend. This comparison can also be viewed across all years using the slider.
+
+Please Note: For the multi variate visulisation, upon clicking on 2 countries in the drop down list, 2 countries get selected for the represenattions in the graph below.
+If you see the alert 'Cannot select more than 2 countries' OR if we wish to change the countries selected, we will have to refresh the page.
