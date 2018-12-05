@@ -18,7 +18,6 @@
 
 #yearSlider::-webkit-slider-thumb {
     -webkit-appearance: none;
-    appearance: none;
     width: 25px;
     height: 25px;
     border-radius: 50%;
@@ -30,6 +29,32 @@
     width: 25px;
     height: 25px;
     border-radius: 50%;
-    background: #4CAF50;
     cursor: pointer;
+}
+
+.focus-line {
+    stroke: darkslategrey;
+    stroke-width: 2px;
+    stroke-dasharray: 3, 3;
+}
+
+.tip {
+    position: absolute;
+    font-size: 15px;
+    text-align: center;
+    border-style: solid;
+    background-color: aliceblue;
+    border-radius: 5px;
+}
+
+.tip .tip-title {
+    border-bottom: 1px solid grey;
+}
+
+.select-container, .trace-container {
+    padding: 10px 0 15px 50px;
+}
+
+#trace-button {
+    margin-left: 15px;
 }
