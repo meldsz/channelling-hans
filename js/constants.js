@@ -157,6 +157,10 @@ function createControls() {
         .on("input", () => {
             displayYear = d3.select("#yearSlider").property("value");
             staticTrace ? staticTraceData() : generateVisualisation();
+            if (selectedCountry != "") {
+                d3.select(".pillar-svg").remove();
+                createPillar(displayYear);
+            }
         });
 
     // display maximum year for the slider
@@ -175,6 +179,8 @@ function createControls() {
         .append("select")
         .on('change', () => {
             selectedCountry = d3.select('select').property('value');
+            d3.select(".pillar-svg").remove();
+            createPillar(displayYear);
         })
         .selectAll("option")
         .data(countryList)
