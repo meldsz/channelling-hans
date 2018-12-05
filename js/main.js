@@ -6,6 +6,7 @@ var displayYear = minYear;
 var intervalId;
 var selectedCountry = "";
 var trace = false;
+var staticTrace = false;
 
 initialSvgSetup();
 
