@@ -3,11 +3,10 @@ function displayYearlyData() {
         staticTrace = staticTrace ? !staticTrace : false;
         d3.select("#play").property("value", "Stop");
         intervalId = setInterval(() => {
-            // d3.selectAll('#trace').remove();
             displayYear++;
             if (displayYear > maxYear) {
                 bubble.exit().remove();
-                d3.selectAll('#trace').remove();
+                d3.select('#trace').remove();
                 displayYear = minYear;
             }
             if (trace) {
@@ -25,7 +24,7 @@ function displayYearlyData() {
         trace = false;
         bubble.style("fill-opacity", 1);
         bubble.exit().remove();
-        d3.selectAll('#trace').remove();
+        d3.select('#trace').remove();
         clearInterval(intervalId);
     }
 
@@ -42,7 +41,7 @@ function traceDataVisualisation() {
         .style('fill', color(filteredTraceDataset.region))
         .style("stroke", "black")
         .style("stroke-opacity", .4)
-        .attr("cx", xScale(filteredTraceDataset.gdp))
+        .attr("cx", xScale(filteredTraceDataset.gdp / 5))
         .attr("cy", yScale(filteredTraceDataset.CompIndex))
         .attr('r', radius(filteredTraceDataset.population));
 }
@@ -102,7 +101,7 @@ function traceData() {
 }
 
 function displayDataOnFocus(countryData) {
-    const cx = xScale(+countryData.gdp);
+    const cx = xScale(+countryData.gdp / 5);
     const cy = yScale(+countryData.CompIndex);
 
     // set the start and end for vertical line

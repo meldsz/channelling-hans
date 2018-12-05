@@ -6,11 +6,14 @@ var displayYear = minYear;
 var intervalId;
 var selectedCountry = "";
 var trace = false;
-var staticTrace = false;
 
 initialSvgSetup();
 
-createControls();
+// slider to view data for a particular year
+createSlider();
+
+// create drop down to select country
+createCountryDropdown();
 
 initializeDataOnFocus();
 

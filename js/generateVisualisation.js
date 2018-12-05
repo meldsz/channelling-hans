@@ -32,7 +32,7 @@ function generateVisualisation() {
         .style("stroke", "black")
         .style("stroke-opacity", .4)
         .attr("id", data => "bubble_" + data.Country)
-        .attr("cx", data => xScale(data.gdp))
+        .attr("cx", data => xScale(data.gdp / 5))
         .attr("cy", data => yScale(data.CompIndex))
         .attr('r', data => radius(data.population))
         .on('mouseover', data => {
@@ -45,7 +45,7 @@ function generateVisualisation() {
             dataLine.style('display', 'none');
             tip.style("opacity", 0);
         })
-        // .append('title')
+        .append('title')
         // .text(data => data.Country)
         .transition(transition);
 
