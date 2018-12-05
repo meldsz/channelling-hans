@@ -171,8 +171,8 @@ function createControls() {
     // create a dropdown to select countries for the trace
 
     const countryList = dataset.filter(data => displayYear == data.year).filter(data => data.Country);
-    countryList.unshift({Country: '---select country---'});
-
+    // countryList.unshift({Country: '---select country---'});
+    
     const dropdown = d3.select("body")
         .append("div")
         .attr('class', 'select-container')
@@ -188,8 +188,7 @@ function createControls() {
         .selectAll("option")
         .data(countryList)
 
-    dropdown.data(countryList)
-        .enter()
+    dropdown.enter()
         .append("option", data => data.Country)
         .attr("value", data => data.Country)
         .attr("label", data => data.Country);
@@ -216,7 +215,7 @@ function createControls() {
         .on("click", () => {
             traceData();
         })
-        // .attr("label", data => data.Country);
+    // .attr("label", data => data.Country);
 }
 
 function displayLegend() {
