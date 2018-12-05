@@ -156,7 +156,7 @@ function createControls() {
         .attr("id", "yearSlider")
         .on("input", () => {
             displayYear = d3.select("#yearSlider").property("value");
-            generateVisualisation();
+            staticTrace ? staticTraceData() : generateVisualisation();
         });
 
     // display maximum year for the slider

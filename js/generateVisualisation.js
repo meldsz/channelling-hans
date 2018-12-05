@@ -19,7 +19,7 @@ function generateVisualisation() {
         .style("stroke", "black")
         .style("stroke-opacity", .4)
         .style('fill', data => color(data.region))
-        .style('fill-opacity', trace | staticTrace ? 0.3 : 1)
+        .style('fill-opacity', (trace || staticTrace) ? 0.3 : 1)
         .attr("cx", data => xScale(data.gdp))
         .attr("cy", data => yScale(data.CompIndex))
         .attr('r', data => radius(data.population));
@@ -28,7 +28,7 @@ function generateVisualisation() {
     bubble.enter()
         .append("circle")
         .style('fill', data => color(data.region))
-        .style('fill-opacity', trace | staticTrace ? 0.3 : 1)
+        .style('fill-opacity', (trace || staticTrace) ? 0.3 : 1)
         .style("stroke", "black")
         .style("stroke-opacity", .4)
         .attr("id", data => "bubble_" + data.Country)

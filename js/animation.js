@@ -1,5 +1,6 @@
 function displayYearlyData() {
     if (d3.select("#play").property("value") === "Play") {
+        staticTrace = staticTrace ? !staticTrace : false;
         d3.select("#play").property("value", "Stop");
         intervalId = setInterval(() => {
             // d3.selectAll('#trace').remove();
@@ -48,12 +49,12 @@ function traceDataVisualisation() {
 
 function staticTraceData() {
     if (selectedCountry) {
+        displayYear = staticTrace ? displayYear : maxYear;
         staticTrace = true;
-        displayYear = maxYear;
         generateVisualisation();
         d3.selectAll('#trace').remove();
         // control to display static trace journey of selected country
-        const filteredTraceDataset = dataset.filter(data => selectedCountry == data.Country);
+        const filteredTraceDataset = dataset.filter(data => selectedCountry == data.Country).filter(data => data.year <= displayYear);
         d3.select(".bubble_group")
             .selectAll('rect')
             .data(filteredTraceDataset)
