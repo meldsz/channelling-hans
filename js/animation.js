@@ -41,7 +41,7 @@ function traceDataVisualisation() {
         .style('fill', color(filteredTraceDataset.region))
         .style("stroke", "black")
         .style("stroke-opacity", .4)
-        .attr("cx", xScale(filteredTraceDataset.gdp / 5))
+        .attr("cx", xScale(filteredTraceDataset.gdp))
         .attr("cy", yScale(filteredTraceDataset.CompIndex))
         .attr('r', radius(filteredTraceDataset.population));
 }
@@ -63,7 +63,7 @@ function staticTraceData() {
             .style('fill', data => color(data.region))
             .style("stroke", "black")
             .style("fill-opacity", 1)
-            .attr("cx", data => xScale(data.gdp / 5))
+            .attr("cx", data => xScale(data.gdp))
             .attr("cy", data => yScale(data.CompIndex))
             .attr('r', data => radius(data.population))
             .on('mouseover', data => {
@@ -101,7 +101,7 @@ function traceData() {
 }
 
 function displayDataOnFocus(countryData) {
-    const cx = xScale(+countryData.gdp / 5);
+    const cx = xScale(+countryData.gdp);
     const cy = yScale(+countryData.CompIndex);
 
     // set the start and end for vertical line
