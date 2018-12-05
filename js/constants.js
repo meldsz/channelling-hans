@@ -165,14 +165,17 @@ function createCountryDropdown() {
     const dropdown = d3.select(".slider-container")
         .append("div")
         .append("select")
+        .attr("id", "countries")
+        .attr("multiple", "multiple")
         .on('change', () => {
             selectedCountry = d3.select('select').property('value');
+            pillarCountries.push(d3.select('select').property('value'));
+            console.log(pillarCountries)
             d3.select(".pillar-svg").remove();
             createPillar(displayYear);
         })
         .selectAll("option")
         .data(countryList)
-        .attr("multiple", "multiple");
 
     dropdown.data(countryList)
         .enter()
